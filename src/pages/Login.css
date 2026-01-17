@@ -1,0 +1,238 @@
+/* ===============================
+   🎨 DESIGN TOKENS
+================================ */
+:root {
+  --bg-dark: #0b0f19;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --neon-purple: #8b5cf6;
+  --neon-pink: #ec4899;
+  --neon-cyan: #22d3ee;
+  --text-light: #e5e7eb;
+}
+
+/* ===============================
+   🌌 PAGE BACKGROUND
+================================ */
+.login-page {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(139, 92, 246, 0.25),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(34, 211, 238, 0.25),
+      transparent 40%
+    ),
+    var(--bg-dark);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Subtle ambient glow (CSS-only, safe) */
+.login-page::before,
+.login-page::after {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(120px);
+  animation: float 12s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.login-page::before {
+  top: -120px;
+  left: -120px;
+  background: radial-gradient(
+    circle,
+    rgba(139, 92, 246, 0.35),
+    transparent 70%
+  );
+}
+
+.login-page::after {
+  bottom: -120px;
+  right: -120px;
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.35),
+    transparent 70%
+  );
+  animation-delay: 6s;
+}
+
+/* ===============================
+   💎 LOGIN CARD
+================================ */
+.login-card {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 420px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow: 0 0 60px rgba(139, 92, 246, 0.25);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+@media (hover: hover) {
+  .login-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 80px rgba(139, 92, 246, 0.35);
+  }
+}
+
+/* ===============================
+   🧠 TYPOGRAPHY
+================================ */
+.login-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--text-light);
+  letter-spacing: 1px;
+}
+
+.login-title span {
+  background: linear-gradient(
+    90deg,
+    var(--neon-purple),
+    var(--neon-pink),
+    var(--neon-cyan)
+  );
+  background-size: 300% 300%;
+  animation: gradientMove 6s ease infinite;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-subtitle {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  color: #9ca3af;
+}
+
+/* ===============================
+   🔐 GOOGLE BUTTON
+================================ */
+.google-login-btn {
+  position: relative;
+  overflow: hidden;
+
+  margin-top: 2.5rem;
+  width: 100%;
+  padding: 0.9rem 1rem;
+
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+
+  background: linear-gradient(
+    90deg,
+    var(--neon-purple),
+    var(--neon-pink)
+  );
+
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+
+  box-shadow: 0 0 25px rgba(236, 72, 153, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+.google-login-btn:hover {
+  box-shadow: 0 0 45px rgba(236, 72, 153, 0.9);
+}
+
+/* Gentle idle shimmer */
+.google-login-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+
+  transform: translateX(-100%);
+  animation: shine 3.5s infinite;
+}
+
+.google-icon {
+  font-size: 1.2rem;
+}
+
+/* ===============================
+   ⏳ LOADING STATE
+================================ */
+.login-loading {
+  color: white;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+/* ===============================
+   📱 RESPONSIVE
+================================ */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 2.2rem 1.8rem;
+  }
+
+  .login-title {
+    font-size: 2.2rem;
+  }
+
+  .google-login-btn {
+    font-size: 0.95rem;
+    padding: 0.85rem;
+  }
+}
+
+/* ===============================
+   🎞️ ANIMATIONS
+================================ */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-60px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  60% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}

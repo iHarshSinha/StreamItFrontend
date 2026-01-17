@@ -1,0 +1,110 @@
+/* ===============================
+   🎨 TOKENS (reuse theme)
+================================ */
+:root {
+  --bg-dark: #0b0f19;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --border-soft: rgba(255, 255, 255, 0.12);
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --accent: #8b5cf6;
+  --danger: #ef4444;
+}
+
+/* ===============================
+   🌌 PAGE WRAPPER
+================================ */
+.dashboard-page {
+  min-height: 100vh;
+  background: var(--bg-dark);
+  padding: 2rem;
+  color: var(--text-main);
+}
+
+/* ===============================
+   🧭 HEADER
+================================ */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.logout-btn:hover {
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+/* ===============================
+   💎 MAIN CARD
+================================ */
+.dashboard-card {
+  max-width: 720px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  padding: 2rem;
+  backdrop-filter: blur(16px);
+}
+
+/* ===============================
+   👤 USER INFO
+================================ */
+.user-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.user-role {
+  color: var(--accent);
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+}
+
+/* ===============================
+   📊 DETAILS GRID
+================================ */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.detail-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.detail-label {
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+  font-size: 0.8rem;
+}
+
+/* ===============================
+   📱 RESPONSIVE
+================================ */
+@media (max-width: 640px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
