@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { exchangeToken } from "../api/auth.api";
-import { useAuth } from "../auth/AuthContext";
+import useAuth from "../auth/useAuth";
 
 export default function AuthCallback() {
   const [params] = useSearchParams();
@@ -15,10 +15,10 @@ export default function AuthCallback() {
     exchangeToken(code)
       .then((res) => {
         setAuthToken(res.data.token);
-        navigate("/dashboard", { replace: true });
+        navigate("/", { replace: true });
       })
       .catch(() => navigate("/login"));
-  }, [code]);
+  }, [code, navigate, setAuthToken]);
 
   return <p>Authenticating...</p>;
 }

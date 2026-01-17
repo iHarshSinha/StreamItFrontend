@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 
 export default function AnimatedContainer({
   children,
@@ -6,7 +6,7 @@ export default function AnimatedContainer({
   delay = 0,
 }) {
   return (
-    <motion.div
+    <Motion.div
       className={className}
       initial="hidden"
       animate="visible"
@@ -28,6 +28,6 @@ export default function AnimatedContainer({
       }}
     >
       {children}
-    </motion.div>
+    </Motion.div>
   );
 }

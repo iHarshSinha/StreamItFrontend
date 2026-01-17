@@ -1,0 +1,45 @@
+:root {
+  --bg-dark: #0b0f19;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --border-soft: rgba(255, 255, 255, 0.12);
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+}
+
+.home-page {
+  min-height: 100vh;
+  background: var(--bg-dark);
+  padding: 2rem;
+  color: var(--text-main);
+}
+
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.home-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.home-card {
+  max-width: 720px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  padding: 2rem;
+  backdrop-filter: blur(16px);
+}
+
+.home-welcome {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.home-subtitle {
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}

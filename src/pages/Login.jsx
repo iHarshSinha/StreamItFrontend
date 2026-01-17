@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "../config/env";
-import { useAuth } from "../auth/AuthContext";
+import useAuth from "../auth/useAuth";
 import { Navigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { FaGoogle } from "react-icons/fa";
 import AnimatedContainer from "../components/AnimatedContainer";
 import "./Login.css";
@@ -14,7 +14,7 @@ export default function Login() {
   }
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const handleGoogleLogin = () => {
@@ -24,7 +24,7 @@ export default function Login() {
   return (
     <div className="login-page">
       <AnimatedContainer className="login-card">
-        <motion.h1
+        <Motion.h1
           className="login-title"
           variants={{
             hidden: { opacity: 0, y: -20 },
@@ -32,9 +32,9 @@ export default function Login() {
           }}
         >
           Stream<span>It</span>
-        </motion.h1>
+        </Motion.h1>
 
-        <motion.p
+        <Motion.p
           className="login-subtitle"
           variants={{
             hidden: { opacity: 0 },
@@ -42,9 +42,9 @@ export default function Login() {
           }}
         >
           Dive into cinematic streaming
-        </motion.p>
+        </Motion.p>
 
-        <motion.button
+        <Motion.button
           className="google-login-btn"
           onClick={handleGoogleLogin}
           variants={{
@@ -56,7 +56,7 @@ export default function Login() {
         >
           <FaGoogle className="google-icon" />
           Continue with Google
-        </motion.button>
+        </Motion.button>
       </AnimatedContainer>
     </div>
   );

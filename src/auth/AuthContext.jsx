@@ -1,14 +1,20 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { refreshToken } from "../api/auth.api";
 import { setAuthHeader } from "../api/axios";
 import { parseJwt, isTokenExpired } from "../utils/token";
+import AuthContext from "./authContext";
 
-const AuthContext = createContext(null);
 const STORAGE_KEY = "access_token";
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
-  const [initializing, setInitializing] = useState(true);
+  const [token, setToken] = useState(() => {
+    const storedToken = localStorage.getItem(STORAGE_KEY);
+    if (storedToken && !isTokenExpired(storedToken)) {
+      return storedToken;
+    }
+    return null;
+  });
+  const [initializing] = useState(false);
 
   const setAuthToken = (jwt) => {
     setToken(jwt);
@@ -18,21 +24,13 @@ export const AuthProvider = ({ children }) => {
 
   const clearAuth = () => {
     setToken(null);
-    setAuthHeader(null);
     localStorage.removeItem(STORAGE_KEY);
   };
 
-  // 🔄 Restore token ONCE (no refresh here)
+  // 🔄 Sync axios auth header with React state
   useEffect(() => {
-    const storedToken = localStorage.getItem(STORAGE_KEY);
-
-    if (storedToken && !isTokenExpired(storedToken)) {
-      setToken(storedToken);
-      setAuthHeader(storedToken);
-    }
-
-    setInitializing(false);
-  }, []);
+    setAuthHeader(token);
+  }, [token]);
 
   // ⏰ Refresh ONLY based on expiry
   useEffect(() => {
@@ -80,5 +78,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

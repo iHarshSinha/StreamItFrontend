@@ -1,7 +1,7 @@
-import { useAuth } from "../auth/AuthContext";
+import useAuth from "../auth/useAuth";
 import { parseJwt } from "../utils/token";
 import { logoutApi } from "../api/auth.api";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import "./Dashboard.css";
 
 export default function Dashboard() {
@@ -39,7 +39,7 @@ export default function Dashboard() {
       </div>
 
       {/* Main Card */}
-      <motion.div
+      <Motion.div
         className="dashboard-card"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -64,7 +64,7 @@ export default function Dashboard() {
             {expiresAt}
           </div>
         </div>
-      </motion.div>
+      </Motion.div>
     </div>
   );
 }
