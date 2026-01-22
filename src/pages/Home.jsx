@@ -2,6 +2,7 @@ import { motion as Motion } from "framer-motion";
 import useAuth from "../auth/useAuth";
 import { logoutApi } from "../api/auth.api";
 import { parseJwt } from "../utils/token";
+import GroupsBar from "../components/GroupsBar";
 import "./Home.css";
 
 export default function Home() {
@@ -9,6 +10,15 @@ export default function Home() {
 
   const payload = token ? parseJwt(token) : null;
   const name = payload?.name ?? payload?.sub ?? "";
+
+  const groups = [
+    { id: "g1", name: "StreamIt Fans" },
+    { id: "g2", name: "Movie Nights" },
+    { id: "g3", name: "Anime Club" },
+    { id: "g4", name: "Docs & True Crime" },
+    { id: "g5", name: "Indie Picks" },
+    { id: "g6", name: "Comedy" },
+  ];
 
   const handleLogout = async () => {
     try {
@@ -23,12 +33,17 @@ export default function Home() {
 
   return (
     <div className="home-page">
-      <div className="home-header">
-        <h1 className="home-title">Home</h1>
+      <div className="home-topbar">
+        <div className="home-brand" aria-label="StreamIt">
+          Stream<span>It</span>
+        </div>
+
         <button className="logout-btn" onClick={handleLogout}>
           Logout
         </button>
       </div>
+
+      <GroupsBar groups={groups} />
 
       <Motion.div
         className="home-card"
@@ -37,7 +52,7 @@ export default function Home() {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="home-welcome">Welcome{ name ? `, ${name}` : "" }.</div>
-        <div className="home-subtitle">You’re logged in.</div>
+        <div className="home-subtitle">Pick a group to start.</div>
       </Motion.div>
     </div>
   );

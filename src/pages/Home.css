@@ -4,6 +4,7 @@
   --border-soft: rgba(255, 255, 255, 0.12);
   --text-main: #e5e7eb;
   --text-muted: #9ca3af;
+  --accent: #8b5cf6;
 }
 
 .home-page {
@@ -13,16 +14,22 @@
   color: var(--text-main);
 }
 
-.home-header {
+.home-topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
 }
 
-.home-title {
-  font-size: 2rem;
-  font-weight: 700;
+
+.home-brand {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.home-brand span {
+  color: var(--accent);
 }
 
 .home-card {
