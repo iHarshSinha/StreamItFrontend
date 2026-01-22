@@ -3,6 +3,7 @@ import useAuth from "../auth/useAuth";
 import { logoutApi } from "../api/auth.api";
 import { parseJwt } from "../utils/token";
 import GroupsBar from "../components/GroupsBar";
+import ChannelsPanel from "../components/ChannelsPanel";
 import "./Home.css";
 
 export default function Home() {
@@ -45,6 +46,8 @@ export default function Home() {
 
       <GroupsBar groups={groups} />
 
+      <ChannelsPanel />
+
       <Motion.div
         className="home-card"
         initial={{ opacity: 0, y: 30 }}
@@ -52,7 +55,7 @@ export default function Home() {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="home-welcome">Welcome{ name ? `, ${name}` : "" }.</div>
-        <div className="home-subtitle">Pick a group to start.</div>
+        <div className="home-subtitle">Pick a group or join a channel.</div>
       </Motion.div>
     </div>
   );

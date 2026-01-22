@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import AuthCallback from "./pages/AuthCallback";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
+import TestController from "./pages/TestController";
 import RequireAuth from "./auth/RequireAuth";
 import { AuthProvider } from "./auth/AuthContext";
 
@@ -26,6 +27,14 @@ export default function App() {
             element={
               <RequireAuth>
                 <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/test-controller"
+            element={
+              <RequireAuth>
+                <TestController />
               </RequireAuth>
             }
           />
