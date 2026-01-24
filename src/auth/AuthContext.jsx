@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { refreshToken } from "../api/auth.api";
 import { setAuthHeader } from "../api/axios";
 import { parseJwt, isTokenExpired } from "../utils/token";
@@ -7,8 +7,11 @@ const AuthContext = createContext(null);
 const STORAGE_KEY = "access_token";
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
-  const [initializing, setInitializing] = useState(true);
+  const storedToken = localStorage.getItem(STORAGE_KEY);
+  const initialToken = storedToken && !isTokenExpired(storedToken) ? storedToken : null;
+  
+  const [token, setToken] = useState(initialToken);
+  const [initializing] = useState(false); // No longer need to set this
 
   const setAuthToken = (jwt) => {
     setToken(jwt);
@@ -22,17 +25,12 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem(STORAGE_KEY);
   };
 
-  // 🔄 Restore token ONCE (no refresh here)
+  // Initialize auth header on mount
   useEffect(() => {
-    const storedToken = localStorage.getItem(STORAGE_KEY);
-
-    if (storedToken && !isTokenExpired(storedToken)) {
-      setToken(storedToken);
-      setAuthHeader(storedToken);
+    if (initialToken) {
+      setAuthHeader(initialToken);
     }
-
-    setInitializing(false);
-  }, []);
+  }, [initialToken]);
 
   // ⏰ Refresh ONLY based on expiry
   useEffect(() => {
@@ -81,4 +79,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export { AuthContext };

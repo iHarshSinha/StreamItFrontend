@@ -1,0 +1,116 @@
+:root {
+  --bg-dark: #0b0f19;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --border-soft: rgba(255, 255, 255, 0.12);
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --accent: #8b5cf6;
+  --accent-hover: #a78bfa;
+}
+
+.home-page {
+  min-height: 100vh;
+  background: var(--bg-dark);
+  padding: 1.5rem;
+  color: var(--text-main);
+}
+
+.home-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.home-brand {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.home-brand span {
+  color: var(--accent);
+}
+
+.home-user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-username {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.logout-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent);
+}
+
+.home-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-soft);
+}
+
+.home-tab {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  position: relative;
+  bottom: -2px;
+}
+
+.home-tab:hover {
+  color: var(--text-main);
+}
+
+.home-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.home-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.home-card {
+  max-width: 720px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  padding: 2rem;
+  backdrop-filter: blur(16px);
+}
+
+.home-welcome {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.home-subtitle {
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}

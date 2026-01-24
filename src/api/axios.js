@@ -2,9 +2,14 @@ import axios from "axios";
 import { API_BASE_URL } from "../config/env";
 import { refreshToken } from "./auth.api";
 
+const STORAGE_KEY = "access_token";
+
 const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
+  headers: {
+    Accept: "application/json",
+  },
 });
 
 let isRefreshing = false;
@@ -31,6 +36,41 @@ export const setAuthHeader = (token) => {
 };
 
 /**
+ * REQUEST INTERCEPTOR - Inject Authorization header from localStorage
+ */
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem(STORAGE_KEY);
+
+    const getExistingAuth = () => {
+      const headers = config?.headers;
+      if (!headers) return null;
+      if (typeof headers.get === "function") {
+        return headers.get("Authorization") ?? headers.get("authorization");
+      }
+      return headers.Authorization ?? headers.authorization ?? null;
+    };
+
+    const existingAuth = getExistingAuth();
+
+    if (!existingAuth && token) {
+      const value = `Bearer ${token}`;
+      if (config.headers && typeof config.headers.set === "function") {
+        config.headers.set("Authorization", value);
+      } else {
+        config.headers = {
+          ...(config.headers ?? {}),
+          Authorization: value,
+        };
+      }
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+/**
  * RESPONSE INTERCEPTOR
  */
 api.interceptors.response.use(
@@ -46,6 +86,7 @@ api.interceptors.response.use(
     // 🔴 If refresh endpoint itself failed → force login
     if (originalRequest.url.includes("/auth/refresh")) {
       setAuthHeader(null);
+      localStorage.removeItem(STORAGE_KEY);
 
       if (!window.location.pathname.startsWith("/login")) {
         window.location.href = "/login";
@@ -66,8 +107,14 @@ api.interceptors.response.use(
       return new Promise((resolve, reject) => {
         failedQueue.push({
           resolve: (token) => {
-            originalRequest.headers["Authorization"] =
-              "Bearer " + token;
+            if (originalRequest.headers && typeof originalRequest.headers.set === "function") {
+              originalRequest.headers.set("Authorization", `Bearer ${token}`);
+            } else {
+              originalRequest.headers = {
+                ...(originalRequest.headers ?? {}),
+                Authorization: `Bearer ${token}`,
+              };
+            }
             resolve(api(originalRequest));
           },
           reject,
@@ -82,16 +129,24 @@ api.interceptors.response.use(
       const newToken = res.data.token;
 
       setAuthHeader(newToken);
+      localStorage.setItem(STORAGE_KEY, newToken);
       processQueue(null, newToken);
 
-      originalRequest.headers["Authorization"] =
-        "Bearer " + newToken;
+      if (originalRequest.headers && typeof originalRequest.headers.set === "function") {
+        originalRequest.headers.set("Authorization", `Bearer ${newToken}`);
+      } else {
+        originalRequest.headers = {
+          ...(originalRequest.headers ?? {}),
+          Authorization: `Bearer ${newToken}`,
+        };
+      }
 
       return api(originalRequest);
     } catch (refreshError) {
       // 🔥 Refresh token expired or invalid
       processQueue(refreshError, null);
       setAuthHeader(null);
+      localStorage.removeItem(STORAGE_KEY);
 
       if (!window.location.pathname.startsWith("/login")) {
         window.location.href = "/login";
