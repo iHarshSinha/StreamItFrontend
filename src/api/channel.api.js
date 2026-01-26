@@ -2,8 +2,6 @@ import api from "./axios";
 
 export const getChannels = () => api.get("/api/channels");
 
-export const getChannel = (id) => api.get(`/api/channels/${id}`);
-
 export const openChannel = (channelId, { limit = 30, cursor = null } = {}) =>
   api.get(`/api/channels/${channelId}/open`, {
     params: {
